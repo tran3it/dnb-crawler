@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_STRICT | E_ALL);
+
 include "settings.class.php";
 include "snoopy.class.php";
 include "mysqli.class.php";
@@ -37,7 +39,7 @@ class Crawler
         $this->dom = new DOMDocument();
         $this->database = Database::getInstance();
 
-        $this->whiteList = $this->settings->$whiteList;
+        $this->whiteList = $this->settings->whiteList;
     }
 
     public function setPageUrl( $url )
