@@ -1,5 +1,6 @@
-<?
-error_reporting(E_ALL);
+<?php
+
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_STRICT | E_ALL);
 include "settings.class.php";
 include "mysqli.class.php";
 

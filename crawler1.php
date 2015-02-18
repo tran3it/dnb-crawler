@@ -1,4 +1,5 @@
 <?php
+
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_STRICT | E_ALL);
 
 include "settings.class.php";
@@ -284,4 +285,5 @@ class Crawler
 
 $crawler = new Crawler();
 $crawler->doMain();
+
 ?>
