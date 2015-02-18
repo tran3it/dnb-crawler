@@ -126,23 +126,23 @@ class Settings
 
     private function initDbInfo()
     {
-        /*$this->dbInfo = array(
+        $this->dbInfo = array(
                                 'uname' => $_ENV['OPENSHIFT_MYSQL_DB_USERNAME'],
                                 'pass' => $_ENV['OPENSHIFT_MYSQL_DB_PASSWORD'],
                                 'name' => $_ENV['OPENSHIFT_APP_NAME'], // By default, app name == db name
                                 'host' => $_ENV['OPENSHIFT_MYSQL_DB_HOST'],
                                 'port' => $_ENV['OPENSHIFT_MYSQL_DB_PORT'],
                                 'socket' => $_ENV['OPENSHIFT_MYSQL_DB_SOCKET']
-                            );*/
+                            );
 
-        $this->dbInfo = array(
+        /*$this->dbInfo = array(
                                 'uname' => 'root',
                                 'pass' => '',
                                 'name' => 'dnb',
                                 'host' => 'localhost',
                                 'port' => ini_get("mysqli.default_port"),
                                 'socket' => ini_get("mysqli.default_socket")
-                            );
+                            );*/
     }
 }
 
