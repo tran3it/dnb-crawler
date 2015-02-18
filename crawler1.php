@@ -1,5 +1,4 @@
 <?
-error_reporting(E_ALL);
 include "settings.class.php";
 include "snoopy.class.php";
 include "mysqli.class.php";
