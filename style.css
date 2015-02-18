@@ -1,0 +1,13 @@
+#rls {
+    font-size: 14px;
+    font-family: Tahoma, Verdana;
+
+}
+#rls th, td{
+    border: 1px solid grey;
+    padding: 6px;
+}
+p {
+    margin: 0;
+    padding: 0;
+}
