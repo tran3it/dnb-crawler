@@ -1,10 +1,12 @@
-<?
+<?php
 include "settings.class.php";
 include "snoopy.class.php";
 include "mysqli.class.php";
 
 class Crawler
 {
+    private $settings;
+
     private $url;
     public $agent;
     public $referer;
@@ -23,6 +25,8 @@ class Crawler
 
     public function __construct()
     {
+        $this->settings = Settings::getInstance();
+
         $this->agent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; uk; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 Some plugins";
         $this->referer = "http://electropeople.org/drumnbass/";
 
@@ -33,7 +37,7 @@ class Crawler
         $this->dom = new DOMDocument();
         $this->database = Database::getInstance();
 
-        $this->whiteList = Settings::$whiteList;
+        $this->whiteList = $this->settings->$whiteList;
     }
 
     public function setPageUrl( $url )

@@ -8,11 +8,15 @@ class Database
     private $db;
     private $mysqli;
 
+    private $settings;
+
     public $debug;
 
     private function __construct()
     {
         $this->debug = false;
+
+        $this->settings = Settings::getInstance();
 
         // Открываем БД (или создаем)
         $this->connect();
@@ -58,7 +62,7 @@ class Database
 
     private function connect()
     {
-        $this->mysqli = new mysqli(Settings::$db['host'], Settings::$db['uname'], Settings::$db['pass'], Settings::$db['name']);
+        $this->mysqli = new mysqli($this->settings->dbInfo['host'], $this->settings->dbInfo['uname'], $this->settings->dbInfo['pass'], $this->settings->dbInfo['name'], $this->settings->dbInfo['port'], $this->settings->dbInfo['socket']);
 
         if ($this->mysqli->connect_error)
         {
