@@ -1,11 +1,13 @@
-#rls {
+table#rls {
     font-size: 14px;
     font-family: Tahoma, Verdana;
-
+    border-spacing: 0;
+    border-collapse: collapse;
 }
-#rls th, td{
-    border: 1px solid grey;
+table#rls th, td{
+    border: 1px solid #404040;
     padding: 6px;
+    border-collapse: collapse;
 }
 p {
     margin: 0;
