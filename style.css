@@ -9,6 +9,15 @@ table#rls th, td{
     padding: 6px;
     border-collapse: collapse;
 }
+table#rls .col1 { width: 35%; }
+table#rls .col2 { width: 20%; }
+table#rls .col3 { width: 35%; }
+table#rls .col4 {
+    width: 8%; 
+    font-size: 13px;
+}
+table#rls .col5 { width: 2%; }
+
 p {
     margin: 0;
     padding: 0;

@@ -158,7 +158,7 @@ class Database
         $this->db = array();
 
         /* read from db */
-        $result = $this->select('SELECT title, descr, text, href, date, added, download FROM releases ORDER BY added DESC;');
+        $result = $this->select('SELECT title, descr, text, href, date, added, download FROM releases WHERE deleted < 1 ORDER BY added DESC;');
 
         if($result->num_rows > 0)
         {

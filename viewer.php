@@ -26,7 +26,7 @@ class Viewer
 
     private function prepareBody()
     {
-        $header = '<tr><th width=35%>Title</th><th width=20%>Descr</th><th width=34%>Text</th><th width=5%>Date</th><th width=5%>Added</th><th width=1%>S</th></tr>';
+        $header = '<tr><th class="col1">Title</th><th class="col2">Descr</th><th class="col3">Text</th><th class="col4">Date</th><th class="col5">S</th></tr>';
         $row = null;
 
         foreach($this->releasesSaved as $release)
@@ -46,13 +46,11 @@ class Viewer
             }
 
             $tr = '<tr>';
-            $tr.= '<td><a href="'.$release['download'].'" target="_blank">'.$release['title'].'</a></td>';
-            $tr.= '<td>'.$descr.'</td>';
-            $tr.= '<td>'.$text.'</td>';
-            $tr.= '<td>'.$release['date'].'</td>';
-            $tr.= '<td>'.$release['added'].'</td>';
-            $tr.= '<td>'.substr($m[0],0,1).'</td>';
-            #$tr.= '<td> </td>';
+            $tr.= '<td class="col1"><a href="'.$release['download'].'" target="_blank">'.$release['title'].'</a></td>';
+            $tr.= '<td class="col2">'.$descr.'</td>';
+            $tr.= '<td class="col3">'.$text.'</td>';
+            $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p></td>';
+            $tr.= '<td class="col5"><a href="'.$release['href'].'">'.substr($m[0],0,2).'</a></td>';
             $tr.= '</tr>';
 
             $row.= $tr;
