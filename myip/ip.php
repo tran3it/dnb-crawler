@@ -31,6 +31,8 @@ class DynamicIp {
         $fp = fopen('list.txt', 'a');
         fwrite($fp, sprintf("%s::%s::%s\r\n", $this->args['name'], $this->args['ip'], date('H:m:s d.m.Y')));
         fclose($fp);
+
+        print 'success: '.$this->args['ip'];
     }
 
     private function loadListFromFile()
