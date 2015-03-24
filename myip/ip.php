@@ -64,10 +64,14 @@ class DynamicIp {
     {
         $ip = null;
 
+        $client  = @$_SERVER['HTTP_CLIENT_IP'];
+        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        $remote  = $_SERVER['REMOTE_ADDR'];
+
         # default
-        if(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
+        if(filter_var($client, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
         {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $client;
         }
 
         #real
