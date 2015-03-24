@@ -73,6 +73,14 @@ class DynamicIp {
         {
             $ip = $client;
         }
+        elseif(filter_var($forward, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
+        {
+            $ip = $forward;
+        }
+        elseif(filter_var($remote, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
+        {
+            $ip = $remote;
+        }
 
         #real
         if(isset($_GET['ip']))
