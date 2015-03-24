@@ -1,0 +1,7 @@
+AddDefaultCharset utf-8
+AddCharset utf-8 *
+
+RewriteEngine On
+Options +FollowSymlinks
+
+RewriteRule ^ip/(set|get)/$ ip.php?act=$1 [QSA,L]
