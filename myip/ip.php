@@ -31,7 +31,7 @@ class DynamicIp {
     private function saveListToFile()
     {
         $fp = fopen('list.txt', 'a');
-        fwrite($fp, sprintf("%s::%s::%s\r\n", $this->args['name'], $this->args['ip'], date('H:m:s d.m.Y')));
+        fwrite($fp, sprintf("%s::%s::%s\r\n", $this->args['name'], $this->args['ip'], date('H:i:s d.m.Y')));
         fclose($fp);
 
         print 'success: '.$this->args['ip'];
