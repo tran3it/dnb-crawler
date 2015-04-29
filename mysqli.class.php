@@ -138,7 +138,6 @@ class Database
         $paramsref = array();
         $debugstr = '';
 
-        $this->debug = true;
         if( $this->debug )
         {
             $parts = explode( '?', $query );
