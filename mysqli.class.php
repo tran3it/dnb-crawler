@@ -91,7 +91,7 @@ class Database
         return $result;
     }*/
 
-    public function insert( $query, $params )
+    private function insert( $query, $params )
     {
         $toreturn = false;
         $paramsref = array();
@@ -132,12 +132,52 @@ class Database
         return $toreturn;
     }
 
-    public function select( $query )
+    private function update( $query, $params )
+    {
+        $toreturn = false;
+        $paramsref = array();
+        $debugstr = '';
+
+        $this->debug = true;
+        if( $this->debug )
+        {
+            $parts = explode( '?', $query );
+
+            for($i = 0; $i < count($parts)-1; $i++)
+            {
+                $debugstr.= $parts[ $i ]."'".$params[ $i+1 ]."'";
+            }
+            $debugstr.= $parts[ $i ];
+
+            echo '<p class="debug">'.$debugstr.'</p>';
+        }
+
+        foreach($params as $key => $value)
+        {
+             $paramsref[ $key ] = &$params[ $key ];
+        }
+
+        $stmt = $this->mysqli->prepare( $query );
+
+        $reflect = new ReflectionClass('mysqli_stmt');
+        $reflectbind = $reflect->getMethod("bind_param");
+        $reflectbind->invokeArgs($stmt, $paramsref);
+        $stmt->execute();
+
+        $toreturn = $stmt->affected_rows;
+
+        $stmt->close();
+
+        return $toreturn;
+    }
+
+
+    private function select( $query )
     {
         return $this->mysqli->query( $query );
     }
 
-    public function selectRow( $query )
+    private function selectRow( $query )
     {
         if(!empty($query))
         {
@@ -158,7 +198,7 @@ class Database
         $this->db = array();
 
         /* read from db */
-        $result = $this->select('SELECT title, descr, text, href, date, added, download FROM releases WHERE deleted < 1 ORDER BY added DESC;');
+        $result = $this->select('SELECT id, title, descr, text, href, date, added, download, deleted FROM releases WHERE deleted < 1 ORDER BY added DESC;');
 
         if($result->num_rows > 0)
         {
@@ -187,6 +227,22 @@ class Database
                 $this->insert( $query, array('sssssss', $row['title'], $row['descr'], $row['text'], $row['href'], $row['date'], $now, $row['download']));
             }
         }
+    }
+
+    private function updateDatabase ( )
+    {
+        /* insert into db */
+        foreach ($this->db as $row)
+        {
+            #$checkIfChanged = $this->selectRow("SELECT 1 FROM releases WHERE href = '".$row['href']."'");
+
+            if(isset($row['changed']) && $row['changed'] > 0)
+            {
+                $query = "UPDATE releases SET title = ?, descr = ?, text = ?, href = ?, date = ?, download = ?, deleted = ? WHERE id = ?";
+                $this->update( $query, array('ssssssii', $row['title'], $row['descr'], $row['text'], $row['href'], $row['date'], $row['download'], $row['deleted'], $row['id']));
+            }
+        }
+
 
     }
 
@@ -198,6 +254,11 @@ class Database
     public function dbLoad()
     {
         $this->readDatabase();
+    }
+
+    public function dbUpdate()
+    {
+        $this->updateDatabase();
     }
 
 }

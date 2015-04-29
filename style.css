@@ -3,20 +3,22 @@ table#rls {
     font-family: Tahoma, Verdana;
     border-spacing: 0;
     border-collapse: collapse;
+    margin-bottom: 15px;
 }
 table#rls th, td{
     border: 1px solid #404040;
     padding: 6px;
     border-collapse: collapse;
 }
-table#rls .col1 { width: 35%; }
+table#rls .col1 { width: 33%; }
 table#rls .col2 { width: 20%; }
 table#rls .col3 { width: 35%; }
 table#rls .col4 {
-    width: 8%; 
+    width: 8%;
     font-size: 13px;
 }
 table#rls .col5 { width: 2%; }
+table#rls .col6 { width: 2%; }
 
 p {
     margin: 0;

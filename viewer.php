@@ -26,7 +26,7 @@ class Viewer
 
     private function prepareBody()
     {
-        $header = '<tr><th class="col1">Title</th><th class="col2">Descr</th><th class="col3">Text</th><th class="col4">Date</th><th class="col5">S</th></tr>';
+        $header = '<tr><th class="col1">Title</th><th class="col2">Descr</th><th class="col3">Text</th><th class="col4">Date</th><th class="col5">S</th><th class="col6">D</th></tr>';
         $row = null;
 
         foreach($this->releasesSaved as $release)
@@ -45,18 +45,25 @@ class Viewer
                 $text.= sprintf('<p>%s</p>', $val);
             }
 
+            preg_match('/rusfolder\.com\/([0-9]+)/i', $release['download'], $match);
+            $relnum = (count($match) > 0) ? $match[1] : null;
+
             $tr = '<tr>';
-            $tr.= '<td class="col1"><a href="'.$release['download'].'" target="_blank">'.$release['title'].'</a></td>';
+            $tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?rusfolder.com/'.$relnum.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
             $tr.= '<td class="col2">'.$descr.'</td>';
             $tr.= '<td class="col3">'.$text.'</td>';
             $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p></td>';
             $tr.= '<td class="col5"><a href="'.$release['href'].'">'.substr($m[0],0,2).'</a></td>';
+            $tr.= '<td class="col6"><input type="checkbox" name="todelete[]" value="'.$release['id'].'"></td>';
             $tr.= '</tr>';
 
             $row.= $tr;
         }
 
-        $this->body = '<table id="rls" width=99%>'.$header.$row.'</table>';
+        $this->body = '<form action="" method="post">';
+        $this->body.= '<table id="rls" width=99%>'.$header.$row.'</table>';
+        $this->body.= '<input id="delbtn" type="submit" value="Delete">';
+        $this->body.= '</form>';
     }
 
     private function printHtml()
@@ -76,10 +83,45 @@ class Viewer
         echo $html;
     }
 
+    private function doRedirect()
+    {
+        $this->body = '<meta http-equiv="refresh" content="1; url='.$_SERVER['PHP_SELF'].'"';
+    }
+
+    private function deleteRelease( $delArray )
+    {
+        foreach ($delArray as $toDeleteId)
+        {
+            settype($toDeleteId, 'integer');
+
+            foreach($this->releasesSaved as &$release)
+            {
+                if($release['id'] == $toDeleteId)
+                {
+                    $release['deleted'] = 1;
+                    $release['changed'] = 1;
+                }
+            }
+        }
+
+        $this->database->setDbContents( $this->releasesSaved );
+        $this->database->dbUpdate();
+    }
+
     public function doMain()
     {
         $this->loadReleases();
-        $this->prepareBody();
+
+        if(isset($_POST) && count($_POST) > 0)
+        {
+            $this->deleteRelease( $_POST['todelete'] );
+            $this->doRedirect();
+        }
+        else
+        {
+            $this->prepareBody();
+        }
+
         $this->printHtml();
     }
 }
