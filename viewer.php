@@ -45,11 +45,11 @@ class Viewer
                 $text.= sprintf('<p>%s</p>', $val);
             }
 
-            preg_match('/rusfolder\.com\/([0-9]+)/i', $release['download'], $match);
-            $relnum = (count($match) > 0) ? $match[1] : null;
+            preg_match('/(rusfolder\..*)/i', $release['download'], $match);
+            $relurl = (count($match) > 0) ? $match[1] : null;
 
             $tr = '<tr>';
-            $tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?rusfolder.com/'.$relnum.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
+            $tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
             $tr.= '<td class="col2">'.$descr.'</td>';
             $tr.= '<td class="col3">'.$text.'</td>';
             $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p></td>';
