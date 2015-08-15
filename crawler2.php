@@ -97,7 +97,8 @@ class Crawler
         $post = array('id' => $id);
 
         $this->snoopy->submit( $this->url, $post );
-        preg_match('#<a.*>(.*rusfolder.*)<\/a>#imU', stripcslashes($this->snoopy->results), $match);
+        #preg_match('#<a.*>(.*rusfolder.*)<\/a>#imU', stripcslashes($this->snoopy->results), $match);
+        preg_match('#<a\s[^>]*href=(?:\"\'??)([^\"\' >]*rusfolder[^\"\' >]*)[^>]*>#im', stripcslashes($this->snoopy->results), $match);
 
         @$this->dom->loadHTML( $match[0] );
         $this->xpath = new DOMXPath( $this->dom );
