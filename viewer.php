@@ -49,10 +49,11 @@ class Viewer
             $relurl = (count($match) > 0) ? $match[1] : null;
 
             $tr = '<tr>';
-            $tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
+            #$tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
+            $tr.= '<td class="col1'.(($release['clicked']>0)?' visited':'').'"><a href="./golink/'.$release['id'].'" target="_blank">'.$release['title'].'</a></td>';
             $tr.= '<td class="col2">'.$descr.'</td>';
             $tr.= '<td class="col3">'.$text.'</td>';
-            $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p></td>';
+            $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p><p>dnl: '.$release['clicked'].'</p></td>';
             $tr.= '<td class="col5"><a href="'.$release['href'].'">'.substr($m[0],0,2).'</a></td>';
             $tr.= '<td class="col6"><input type="checkbox" name="todelete[]" value="'.$release['id'].'"></td>';
             $tr.= '</tr>';
@@ -61,8 +62,8 @@ class Viewer
         }
 
         $this->body = '<form action="" method="post">';
-        $this->body.= '<table id="rls" width=99%>'.$header.$row.'</table>';
         $this->body.= '<input id="delbtn" type="submit" value="Delete">';
+        $this->body.= '<table id="rls" width=99%>'.$header.$row.'</table>';
         $this->body.= '</form>';
     }
 

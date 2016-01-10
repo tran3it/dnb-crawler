@@ -197,7 +197,23 @@ class Database
         $this->db = array();
 
         /* read from db */
-        $result = $this->select('SELECT id, title, descr, text, href, date, added, download, deleted FROM releases WHERE deleted < 1 ORDER BY added DESC;');
+        $result = $this->select('SELECT id, title, descr, text, href, date, added, download, deleted, clicked FROM releases WHERE deleted < 1 ORDER BY added DESC;');
+
+        if($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $this->db[] = $row;
+            }
+        }
+    }
+
+    private function readRelease ( $id )
+    {
+        $this->db = array();
+
+        /* read from db */
+        $result = $this->select('SELECT id, title, descr, text, href, date, added, download, deleted, clicked FROM releases WHERE deleted < 1 and id = '.$id.' ORDER BY added DESC;');
 
         if($result->num_rows > 0)
         {
@@ -237,8 +253,8 @@ class Database
 
             if(isset($row['changed']) && $row['changed'] > 0)
             {
-                $query = "UPDATE releases SET title = ?, descr = ?, text = ?, href = ?, date = ?, download = ?, deleted = ? WHERE id = ?";
-                $this->update( $query, array('ssssssii', $row['title'], $row['descr'], $row['text'], $row['href'], $row['date'], $row['download'], $row['deleted'], $row['id']));
+                $query = "UPDATE releases SET title = ?, descr = ?, text = ?, href = ?, date = ?, download = ?, deleted = ?, clicked = ? WHERE id = ?";
+                $this->update( $query, array('ssssssiii', $row['title'], $row['descr'], $row['text'], $row['href'], $row['date'], $row['download'], $row['deleted'], $row['clicked'], $row['id']));
             }
         }
 
@@ -253,6 +269,11 @@ class Database
     public function dbLoad()
     {
         $this->readDatabase();
+    }
+
+    public function dbLoadOneRelease( $id )
+    {
+        $this->readRelease($id);
     }
 
     public function dbUpdate()
