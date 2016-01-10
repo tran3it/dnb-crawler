@@ -58,7 +58,7 @@ class Redirector
 
         $url = 'http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=';
 
-        $this->body = '<meta http-equiv="refresh" content="1; url='.$url.'"';
+        $this->body = '<meta http-equiv="refresh" content="0; url='.$url.'"';
     }
 
     private function updateCounter()
@@ -80,8 +80,6 @@ class Redirector
         $this->loadRelease();
 
         $this->updateCounter();
-
-        print_r($this->release);
 
         $this->doRedirect();
         $this->printHtml();
