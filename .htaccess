@@ -4,6 +4,6 @@ AddCharset utf-8 *
 RewriteEngine On
 Options +FollowSymlinks
 
-DirectoryIndex viewer.php
+DirectoryIndex view/
 RewriteRule ^view/?$ viewer.php
 RewriteRule ^golink/([0-9]{1,4})/?$ golink.php?id=$1

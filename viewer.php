@@ -7,6 +7,7 @@ include "mysqli.class.php";
 class Viewer
 {
     private $database;
+    private $settings;
 
     private $releasesSaved;
 
@@ -16,6 +17,7 @@ class Viewer
     public function __construct()
     {
         $this->database = Database::getInstance();
+        $this->settings = Settings::getInstance();
     }
 
     private function loadReleases()
@@ -74,6 +76,7 @@ class Viewer
         $html.= '<HEAD>';
         $html.= '<TITLE>Crawler</TITLE>';
         $html.= '<link rel="stylesheet" type="text/css" href="./style.css" media="screen">';
+        $html.= '<base href="'.Settings::baseUrl.'" />';
         $html.= '</HEAD>';
         $html.= '<BODY>';
         $html.= $this->body;

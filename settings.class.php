@@ -3,6 +3,8 @@
 class Settings
 {
     private static $instance;
+    
+    public $baseUrl;
 
     public $whiteList;
     public $dbInfo;
@@ -11,6 +13,8 @@ class Settings
     {
         $this->initWhiteList();
         $this->initDbInfo();
+        
+        $this->baseUrl = 'http://php-tran3it.rhcloud.com/';
     }
 
     private function  __wakeup()
