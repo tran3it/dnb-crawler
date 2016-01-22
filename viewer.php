@@ -76,7 +76,7 @@ class Viewer
         $html.= '<HEAD>';
         $html.= '<TITLE>Crawler</TITLE>';
         $html.= '<link rel="stylesheet" type="text/css" href="./style.css" media="screen">';
-        $html.= '<base href="'.Settings::baseUrl.'" />';
+        $html.= '<base href="'.$this->settings->baseUrl.'" />';
         $html.= '</HEAD>';
         $html.= '<BODY>';
         $html.= $this->body;
