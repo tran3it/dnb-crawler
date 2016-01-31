@@ -27,6 +27,6 @@ p {
 a {
     color: #0000d0; /* Цвет ссылок */
 }
-a:visited {
+a:visited, .visited a {
     color: #900060; /* Цвет посещенных ссылок */
 }

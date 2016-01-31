@@ -52,7 +52,7 @@ class Viewer
 
             $tr = '<tr>';
             #$tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
-            $tr.= '<td class="col1'.(($release['clicked']>0)?' visited':'').'"><a href="./golink/'.$release['id'].'" target="_blank">'.$release['title'].'</a></td>';
+            $tr.= '<td class="col1'.(($release['clicked']>0)?' visited':'').'"><a href="./golink/'.$release['id'].'" target="_blank" title="'.$relurl.'">'.$release['title'].'</a></td>';
             $tr.= '<td class="col2">'.$descr.'</td>';
             $tr.= '<td class="col3">'.$text.'</td>';
             $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p><p>dnl: '.$release['clicked'].'</p></td>';
@@ -89,7 +89,7 @@ class Viewer
 
     private function doRedirect()
     {
-        $this->body = '<meta http-equiv="refresh" content="1; url='.$_SERVER['PHP_SELF'].'"';
+        $this->body = '<meta http-equiv="refresh" content="1; url='.$this->settings->baseUrl.'/view/"';
     }
 
     private function deleteRelease( $delArray )
