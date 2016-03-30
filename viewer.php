@@ -76,7 +76,7 @@ class Viewer
         $html.= '<HEAD>';
         $html.= '<TITLE>Crawler</TITLE>';
         $html.= '<base href="'.$this->settings->baseUrl.'" />';
-        $html.= '<link rel="stylesheet" type="text/css" href="./style.css" media="screen">';        
+        $html.= '<link rel="stylesheet" type="text/css" href="./style.css" media="screen">';
         $html.= '</HEAD>';
         $html.= '<BODY>';
         $html.= $this->body;
@@ -89,7 +89,7 @@ class Viewer
 
     private function doRedirect()
     {
-        $this->body = '<meta http-equiv="refresh" content="1; url='.$this->settings->baseUrl.'/view/"';
+        $this->body = '<meta http-equiv="refresh" content="1; url='.$this->settings->baseUrl.'view/"';
     }
 
     private function deleteRelease( $delArray )
