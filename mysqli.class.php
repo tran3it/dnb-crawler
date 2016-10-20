@@ -55,9 +55,23 @@ class Database
         $this->db = $db;
     }
 
-    public function getDbContents ( )
+    public function getDbContents ( $year = null )
     {
-        return $this->db;
+        if(is_null($year))
+        {
+            return $this->db;
+        }
+        else {
+            $result = array();
+            
+            foreach ($this->db as $row)
+            {
+                if(substr($row['date'], 0, 4) == $year)
+                    $result[] = $row;
+            }
+            
+            return $result;
+        }
     }
 
     private function connect()

@@ -13,9 +13,14 @@ class Viewer
 
     private $html;
     private $body;
+    
+    private $year;
 
     public function __construct()
     {
+        #$this->year = date('Y');
+        $this->year = null;
+        
         $this->database = Database::getInstance();
         $this->settings = Settings::getInstance();
     }
@@ -23,7 +28,7 @@ class Viewer
     private function loadReleases()
     {
         $this->database->dbLoad();
-        $this->releasesSaved = $this->database->getDbContents();
+        $this->releasesSaved = $this->database->getDbContents( $this->year );
     }
 
     private function prepareBody()
@@ -114,6 +119,13 @@ class Viewer
 
     public function doMain()
     {
+        # GET variables
+        if(isset($_GET['year']))
+        {
+            $this->year = $_GET['year'];
+            settype($this->year, 'integer');
+        }
+        
         $this->loadReleases();
 
         if(isset($_POST) && count($_POST) > 0)
@@ -122,7 +134,9 @@ class Viewer
             $this->doRedirect();
         }
         else
-        {
+        {            
+
+            
             $this->prepareBody();
         }
 
