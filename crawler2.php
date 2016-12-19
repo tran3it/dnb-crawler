@@ -9,7 +9,7 @@ include "mysqli.class.php";
 class Crawler
 {
     private $settings;
-    
+
     private $url;
     public $agent;
     public $referer;
@@ -29,7 +29,7 @@ class Crawler
     public function __construct()
     {
         $this->settings = Settings::getInstance();
-        
+
         $this->agent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; uk; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 Some plugins";
         $this->referer = "http://freake.ru/music/style/drum-bass/";
 
@@ -98,11 +98,13 @@ class Crawler
 
         $this->snoopy->submit( $this->url, $post );
         #preg_match('#<a.*>(.*rusfolder.*)<\/a>#imU', stripcslashes($this->snoopy->results), $match);
-        preg_match('#<a\s[^>]*href=(?:\"\'??)([^\"\' >]*rusfolder[^\"\' >]*)[^>]*>#im', stripcslashes($this->snoopy->results), $match);
+        #preg_match('#<a\s[^>]*href=(?:\"\'??)([^\"\' >]*rusfolder[^\"\' >]*)[^>]*>#im', stripcslashes($this->snoopy->results), $match);
 
-        @$this->dom->loadHTML( $match[0] );
+        $json = json_decode($this->snoopy->results);
+
+        $this->dom->loadHTML( $json->link );
         $this->xpath = new DOMXPath( $this->dom );
-        $this->node = $this->xpath->query( ".//*" );
+        $this->node = $this->xpath->query( ".//a/@href" );
     }
 
     public function createReleaseList()
@@ -201,8 +203,19 @@ class Crawler
 
     public function filterDownloadLink( $i )
     {
-        /* rusfolder */
-        $this->releasesFiltered[$i]['download'] = $this->node->item(1)->getAttribute('href');
+        /* links */
+        $nodeContentsArray = array();
+
+        /* fetched links */
+        $path['links'] = $this->node;
+
+        for ($i=0; is_object($path['links']->item($i)); $i++)
+        {
+            $this->getAllNodeContents($path['links']->item($i), $nodeContentsArray);
+        }
+
+        /* saving */
+        $this->releasesFiltered[$i]['download'] = serialize($nodeContentsArray);
     }
 
     public function dateIsTooOld ( $date )
