@@ -102,7 +102,7 @@ class Crawler
 
         $json = json_decode($this->snoopy->results);
 
-        $this->dom->loadHTML( $json->link );
+        @$this->dom->loadHTML( $json->link );
         $this->xpath = new DOMXPath( $this->dom );
         $this->node = $this->xpath->query( ".//a/@href" );
     }
@@ -177,7 +177,7 @@ class Crawler
         }
     }
 
-    public function filterInfo( $k )
+    public function filterInfo( $id )
     {
         /* tracklist */
         $nodeContentsArray = array();
@@ -197,11 +197,10 @@ class Crawler
                 $tracklist[] = $nodeContentsArray[ $i ];
         }
 
-        $this->releasesFiltered[$k]['text'] = serialize( $tracklist );
-
+        $this->releasesFiltered[$id]['text'] = serialize( $tracklist );
     }
 
-    public function filterDownloadLink( $i )
+    public function filterDownloadLink( $id )
     {
         /* links */
         $nodeContentsArray = array();
@@ -209,13 +208,13 @@ class Crawler
         /* fetched links */
         $path['links'] = $this->node;
 
-        for ($i=0; is_object($path['links']->item($i)); $i++)
+        for($i=0; is_object($path['links']->item($i)); $i++)
         {
             $this->getAllNodeContents($path['links']->item($i), $nodeContentsArray);
         }
 
         /* saving */
-        $this->releasesFiltered[$i]['download'] = serialize($nodeContentsArray);
+        $this->releasesFiltered[$id]['download'] = serialize($nodeContentsArray);
     }
 
     public function dateIsTooOld ( $date )
