@@ -13,9 +13,13 @@ class Redirector
 
     private $rlsId;
 
+    private $fileshares;
+
     public function __construct()
     {
         $this->database = Database::getInstance();
+
+        $this->fileshares = array(0 => 'rusfolder', 1 => 'uploadboy', 2 => 'ul.to');
 
         $this->doMain();
     }
@@ -53,12 +57,33 @@ class Redirector
 
     private function doRedirect( )
     {
-        preg_match('/(rusfolder\..*)/i', $this->release[0]['download'], $match);
+        $urls = unserialize($this->release[0]['download']);
+
+        $url = $this->getFavouriteLink($urls);
+
+        /*preg_match('/(rusfolder\..*)/i', $this->release[0]['download'], $match);
         $relurl = (count($match) > 0) ? $match[1] : null;
+        $url = 'http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=';*/
 
-        $url = 'http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=';
+        $this->body = '<meta http-equiv="refresh" content="20; url='.$url.'"';
+    }
 
-        $this->body = '<meta http-equiv="refresh" content="0; url='.$url.'"';
+    private function getFavouriteLink( $urls )
+    {
+        foreach ($urls as $url)
+        {
+            for($i=0; $i < count($this->fileshares); $i++)
+            {
+                if(strstr($url, $this->fileshares[$i]) > 0)
+                {
+                    # found favourite
+                    return $url;
+                }
+            }
+        }
+
+        # default
+        return $urls[0];
     }
 
     private function updateCounter()

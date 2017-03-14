@@ -13,14 +13,14 @@ class Viewer
 
     private $html;
     private $body;
-    
+
     private $year;
 
     public function __construct()
     {
         #$this->year = date('Y');
         $this->year = null;
-        
+
         $this->database = Database::getInstance();
         $this->settings = Settings::getInstance();
     }
@@ -40,28 +40,33 @@ class Viewer
         {
             $descr = '';
             $text = '';
+            $dload = '';
+
             preg_match('#(freake|electropeople)#im', $release['href'],$m);
 
+            /* description */
             foreach (unserialize($release['descr']) as $key => $val)
             {
                 $descr.= sprintf('<p>%s: %s</p>', ucfirst($key), $val);
             }
-
+            /* track names */
             foreach (unserialize($release['text']) as $val)
             {
                 $text.= sprintf('<p>%s</p>', $val);
             }
-
-            preg_match('/(rusfolder\..*)/i', $release['download'], $match);
-            $relurl = (count($match) > 0) ? $match[1] : null;
+            /* download links */
+            foreach (unserialize($release['download']) as $key => $val)
+            {
+                $dload.= sprintf('<p><a href="%s">%s</a></p>', $val, 'dnl');
+            }
 
             $tr = '<tr>';
             #$tr.= '<td class="col1"><a href="http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=" target="_blank">'.$release['title'].'</a></td>';
-            $tr.= '<td class="col1'.(($release['clicked']>0)?' visited':'').'"><a href="./golink/'.$release['id'].'" target="_blank" title="'.$relurl.'">'.$release['title'].'</a></td>';
+            $tr.= '<td class="col1'.(($release['clicked']>0)?' visited':'').'"><a href="./golink/'.$release['id'].'" target="_blank">'.$release['title'].'</a></td>';
             $tr.= '<td class="col2">'.$descr.'</td>';
             $tr.= '<td class="col3">'.$text.'</td>';
             $tr.= '<td class="col4"><p>rls: '.$release['date'].'</p><p>add: '.$release['added'].'</p><p>dnl: '.$release['clicked'].'</p></td>';
-            $tr.= '<td class="col5"><a href="'.$release['href'].'">'.substr($m[0],0,2).'</a></td>';
+            $tr.= '<td class="col5"><p><a href="'.$release['href'].'">'.substr($m[0],0,2).'</a></p>'.$dload.'</td>';
             $tr.= '<td class="col6"><input type="checkbox" name="todelete[]" value="'.$release['id'].'"></td>';
             $tr.= '</tr>';
 
@@ -125,7 +130,7 @@ class Viewer
             $this->year = $_GET['year'];
             settype($this->year, 'integer');
         }
-        
+
         $this->loadReleases();
 
         if(isset($_POST) && count($_POST) > 0)
@@ -134,9 +139,7 @@ class Viewer
             $this->doRedirect();
         }
         else
-        {            
-
-            
+        {
             $this->prepareBody();
         }
 
