@@ -65,7 +65,7 @@ class Redirector
         $relurl = (count($match) > 0) ? $match[1] : null;
         $url = 'http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=';*/
 
-        $this->body = '<meta http-equiv="refresh" content="10000; url='.$url.'"';
+        $this->body = '<meta http-equiv="refresh" content="0; url='.$url.'"';
     }
 
     private function getFavouriteLink( $urls )
