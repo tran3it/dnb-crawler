@@ -65,7 +65,7 @@ class Redirector
         $relurl = (count($match) > 0) ? $match[1] : null;
         $url = 'http://ints.rusfolder.com/ints/?'.$relurl.'?ints_code=';*/
 
-        $this->body = '<meta http-equiv="refresh" content="0; url='.$url.'"';
+        $this->body = '<meta http-equiv="refresh" content="10000; url='.$url.'"';
     }
 
     private function getFavouriteLink( $urls )
@@ -74,7 +74,7 @@ class Redirector
         {
             for($i=0; $i < count($this->fileshares); $i++)
             {
-                if(strstr($url, $this->fileshares[$i]) > 0)
+                if(strpos($url, $this->fileshares[$i]) > 0)
                 {
                     # found favourite
                     return $url;
