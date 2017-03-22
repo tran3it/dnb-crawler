@@ -70,9 +70,9 @@ class Redirector
 
     private function getFavouriteLink( $urls )
     {
-        foreach ($urls as $url)
+        for($i=0; $i < count($this->fileshares); $i++)
         {
-            for($i=0; $i < count($this->fileshares); $i++)
+            foreach ($urls as $url)
             {
                 if(strpos($url, $this->fileshares[$i]) > 0)
                 {
