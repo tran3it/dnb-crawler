@@ -15,7 +15,6 @@ class Settings
         $this->initDbInfo();
 
         $this->baseUrl = 'http://httpd-tran3it.7e14.starter-us-west-2.openshiftapps.com/';
-        #$this->baseUrl = 'http://data/php/';
     }
 
     private function  __wakeup()
