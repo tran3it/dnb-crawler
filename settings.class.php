@@ -3,7 +3,7 @@
 class Settings
 {
     private static $instance;
-    
+
     public $baseUrl;
 
     public $whiteList;
@@ -13,8 +13,9 @@ class Settings
     {
         $this->initWhiteList();
         $this->initDbInfo();
-        
-        $this->baseUrl = 'http://php-tran3it.rhcloud.com/';
+
+        $this->baseUrl = 'http://httpd-tran3it.7e14.starter-us-west-2.openshiftapps.com/';
+        #$this->baseUrl = 'http://data/php/';
     }
 
     private function  __wakeup()
@@ -131,12 +132,12 @@ class Settings
     private function initDbInfo()
     {
         $this->dbInfo = array(
-                                'uname' => $_ENV['OPENSHIFT_MYSQL_DB_USERNAME'],
-                                'pass' => $_ENV['OPENSHIFT_MYSQL_DB_PASSWORD'],
-                                'name' => $_ENV['OPENSHIFT_APP_NAME'], // By default, app name == db name
-                                'host' => $_ENV['OPENSHIFT_MYSQL_DB_HOST'],
-                                'port' => $_ENV['OPENSHIFT_MYSQL_DB_PORT'],
-                                'socket' => $_ENV['OPENSHIFT_MYSQL_DB_SOCKET']
+                                'uname' => $_ENV['MYSQL_USER'],
+                                'pass' => $_ENV['MYSQL_PASSWORD'],
+                                'name' => $_ENV['MYSQL_DATABASE'],
+                                'host' => $_ENV['MYSQL_SERVICE_HOST'],
+                                'port' => $_ENV['MYSQL_SERVICE_PORT']
+                                //'socket' => $_ENV['OPENSHIFT_MYSQL_DB_SOCKET']
                             );
 
         /*$this->dbInfo = array(
